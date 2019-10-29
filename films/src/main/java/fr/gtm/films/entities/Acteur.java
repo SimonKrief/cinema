@@ -18,12 +18,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 
 @Entity@Table(name = "acteurs")
 @Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name = "Acteur.getAll",
+				query = "SELECT a FROM Acteur a")
+})
 public class Acteur {
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pk_acteur")
@@ -73,6 +79,17 @@ public class Acteur {
 		this.dateDeNaissance = dateDeNaissance;
 		this.dateDeMort = dateDeMort;
 
+	}
+	
+	
+
+
+	public Acteur( String nom, String prenom, String civilite) {
+		super();
+
+		this.nom = nom;
+		this.prenom = prenom;
+		this.civilite = civilite;
 	}
 
 

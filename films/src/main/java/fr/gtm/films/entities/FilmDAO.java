@@ -42,5 +42,14 @@ public class FilmDAO extends AbstractDAO<Film, Long> {
 		return films;
 	}
 	
+	public Film getFilmsByName(String nom) {
+		EntityManager em = getEntityManagerFactory().createEntityManager();
+		Film film = em.createNamedQuery("Film.getByRealisateur", Film.class).setParameter("nom", nom).getSingleResult();
+		em.close();
+		return film;
+	}
+	
+	
+	
 
 }

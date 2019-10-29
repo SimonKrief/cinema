@@ -33,7 +33,9 @@ import javax.persistence.Transient;
 	@NamedQuery(name = "Film.getAll",
 				query = "SELECT f FROM Film f"),
 	@NamedQuery(name = "Film.getByRealisateur",
-				query = "SELECT f FROM Film f WHERE UPPER(f.realisateur) LIKE :realisateur")
+				query = "SELECT f FROM Film f WHERE UPPER(f.realisateur) LIKE :realisateur"),
+//	@NamedQuery(name = "Film.getByName",
+//				query = "SELECT f FROM Film f WHERE UPPER(f.nom) LIKE :nom")
 })
 public class Film {
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -164,6 +166,10 @@ public class Film {
 
 	public void setActeurs(Map<String, Acteur> acteurs) {
 		this.acteurs = acteurs;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 
