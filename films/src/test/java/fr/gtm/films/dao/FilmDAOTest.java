@@ -51,6 +51,17 @@ public class FilmDAOTest {
 //		assertEquals(1, liste.size());
 	}
 	
+	@Test
+	public void getActeursFilm() {
+		FilmDAO dao = new FilmDAO(emf);
+		Film film = dao.findById(1L);
+//		assertNotNull(object);
+		
+		List<Acteur> liste = film.getActeurs();
+		assertNotNull(liste);
+//		assertEquals(1, liste.size());
+	}
+	
 	
 
 	

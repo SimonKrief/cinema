@@ -1,14 +1,17 @@
 package fr.gtm.films.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,15 +41,16 @@ public class Film {
 	private LocalDate dateSortie;
 	private int duree;
 	
-	@Transient
-	private List<Acteur> acteurs;
-//	@ManyToMany
-//	@JoinTable(name = "film_acteur", 
-//	joinColumns=@JoinColumn(name = "fk_filmr"),
-//	inverseJoinColumns=@JoinColumn(name="fk_acteurs"))
-//	private Set<Film> films= new HashSet<>();
+//	@Transient
+//	private List<Acteur> acteurs;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "film_acteur", 
+	joinColumns=@JoinColumn(name = "fk_film"),
+	inverseJoinColumns=@JoinColumn(name="fk_acteur"))
 //	private Set<Acteur> acteurs= new HashSet<>();
-	
+	// mais pourquoi?
+	private List<Acteur> acteurs = new ArrayList<Acteur>();
+
 
 
 	public Film() {
@@ -92,14 +96,65 @@ public class Film {
 		this.duree = duree;
 	}
 
-//	public Set<Film> getFilms() {
-//		return films;
-//	}
-//
-//	public void setFilms(Set<Film> films) {
-//		this.films = films;
-//	}
-//
+	public List<Acteur> getActeurs() {
+		return acteurs;
+	}
+
+	public void setActeurs(List<Acteur> acteurs) {
+		this.acteurs = acteurs;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((acteurs == null) ? 0 : acteurs.hashCode());
+		result = prime * result + ((dateSortie == null) ? 0 : dateSortie.hashCode());
+		result = prime * result + duree;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((realisateur == null) ? 0 : realisateur.hashCode());
+		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Film other = (Film) obj;
+		if (acteurs == null) {
+			if (other.acteurs != null)
+				return false;
+		} else if (!acteurs.equals(other.acteurs))
+			return false;
+		if (dateSortie == null) {
+			if (other.dateSortie != null)
+				return false;
+		} else if (!dateSortie.equals(other.dateSortie))
+			return false;
+		if (duree != other.duree)
+			return false;
+		if (id != other.id)
+			return false;
+		if (realisateur == null) {
+			if (other.realisateur != null)
+				return false;
+		} else if (!realisateur.equals(other.realisateur))
+			return false;
+		if (titre == null) {
+			if (other.titre != null)
+				return false;
+		} else if (!titre.equals(other.titre))
+			return false;
+		return true;
+	}
+
+
+
 //	public Set<Acteur> getActeurs() {
 //		return acteurs;
 //	}
@@ -111,17 +166,17 @@ public class Film {
 	
 	
 
-	public long getId() {
-		return id;
-	}
-
-	public List<Acteur> getActeurs() {
-		return acteurs;
-	}
-
-	public void setActeurs(List<Acteur> acteurs) {
-		this.acteurs = acteurs;
-	}
+//	public long getId() {
+//		return id;
+//	}
+//
+//	public List<Acteur> getActeurs() {
+//		return acteurs;
+//	}
+//
+//	public void setActeurs(List<Acteur> acteurs) {
+//		this.acteurs = acteurs;
+//	}
 
 
 
