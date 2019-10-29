@@ -27,7 +27,9 @@ public class Acteur {
 	private String nom;
 	private String prenom;
 	private String civilite;
+	@Column(name = "date_naissance")
 	private LocalDate dateDeNaissance;
+	@Column(name = "date_mort")
 	private LocalDate dateDeMort;
 	@Transient
 	@ManyToMany

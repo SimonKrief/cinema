@@ -8,7 +8,7 @@
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/communes-france?serverTimezone=UTC" />
+				value="jdbc:mysql://localhost:3306/cinema?serverTimezone=UTC" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password"
 				value="P@ssw0rd" />

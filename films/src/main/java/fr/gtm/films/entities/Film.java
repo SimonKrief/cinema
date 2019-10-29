@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,16 +15,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity@Table(name = "films")
+@Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name = "Film.getAll",
+				query = "SELECT f FROM Film f"),
+	@NamedQuery(name = "Film.getByRealisateur",
+				query = "SELECT f FROM Film f WHERE UPPER(f.realisateur) LIKE :realisateur")
+})
 public class Film {
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pk_film")
 	private long id;
 	private String titre;
 	private String realisateur;
+	@Column(name = "date_sortie")
 	private LocalDate dateSortie;
 	private int duree;
 	
