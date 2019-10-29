@@ -2,8 +2,10 @@ package fr.gtm.films.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Access;
@@ -18,6 +20,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -42,14 +46,15 @@ public class Film {
 	private int duree;
 	
 //	@Transient
-//	private List<Acteur> acteurs;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "film_acteur", 
 	joinColumns=@JoinColumn(name = "fk_film"),
 	inverseJoinColumns=@JoinColumn(name="fk_acteur"))
-//	private Set<Acteur> acteurs= new HashSet<>();
-	// mais pourquoi?
-	private List<Acteur> acteurs = new ArrayList<Acteur>();
+
+//	private List<Acteur> acteurs = new ArrayList<Acteur>();
+	@MapKeyColumn(name = "role")
+	private Map<String, Acteur> acteurs = new HashMap<String, Acteur>();
+
 
 
 
@@ -96,13 +101,13 @@ public class Film {
 		this.duree = duree;
 	}
 
-	public List<Acteur> getActeurs() {
-		return acteurs;
-	}
-
-	public void setActeurs(List<Acteur> acteurs) {
-		this.acteurs = acteurs;
-	}
+//	public List<Acteur> getActeurs() {
+//		return acteurs;
+//	}
+//
+//	public void setActeurs(List<Acteur> acteurs) {
+//		this.acteurs = acteurs;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -153,30 +158,16 @@ public class Film {
 		return true;
 	}
 
+	public Map<String, Acteur> getActeurs() {
+		return acteurs;
+	}
+
+	public void setActeurs(Map<String, Acteur> acteurs) {
+		this.acteurs = acteurs;
+	}
 
 
-//	public Set<Acteur> getActeurs() {
-//		return acteurs;
-//	}
-//
-//	public void setActeurs(Set<Acteur> acteurs) {
-//		this.acteurs = acteurs;
-//	}
-	
-	
-	
 
-//	public long getId() {
-//		return id;
-//	}
-//
-//	public List<Acteur> getActeurs() {
-//		return acteurs;
-//	}
-//
-//	public void setActeurs(List<Acteur> acteurs) {
-//		this.acteurs = acteurs;
-//	}
 
 
 

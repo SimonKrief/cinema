@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -36,14 +37,29 @@ public class Acteur {
 	private LocalDate dateDeMort;
 	
 	@Transient
-//	@ManyToMany(mappedBy = "acteurs", cascade = CascadeType.ALL)
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "acteurs", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "film_acteur", 
 	joinColumns=@JoinColumn(name = "fk_acteur"),
 	inverseJoinColumns=@JoinColumn(name="fk_film"))
-//	private Set<Film> films= new HashSet<>();
 	private List<Film> films;
 	
+//	@MapKeyColumn(name = "role")
+//	private List<String> role;
+
+	
+
+//    @OneToMany   // unidirectional
+//    @JoinTable(name="film_acteur",
+//               joinColumns=@JoinColumn(name="fk_acteur"),
+//               inverseJoinColumns=@JoinColumn(name="role"))
+//    @MapKeyJoinColumn(name="DIVISION")
+//    Map<Division, VicePresident> organization;
+
+	
+	
+	
+
 
 	public Acteur() {
 	}

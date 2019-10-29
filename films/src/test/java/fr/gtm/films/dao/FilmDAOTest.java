@@ -3,6 +3,7 @@ package fr.gtm.films.dao;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -55,11 +56,11 @@ public class FilmDAOTest {
 	public void getActeursFilm() {
 		FilmDAO dao = new FilmDAO(emf);
 		Film film = dao.findById(1L);
-//		assertNotNull(object);
 		
-		List<Acteur> liste = film.getActeurs();
+//		List<Acteur> liste = film.getActeurs();
+		Map<String, Acteur> liste = film.getActeurs();
 		assertNotNull(liste);
-//		assertEquals(1, liste.size());
+
 	}
 	
 	
