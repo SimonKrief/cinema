@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,14 +20,14 @@ import javax.ejb.StatefulTimeout;
 import javax.enterprise.context.SessionScoped;
 
 //@Singleton
-//@Stateful
-//@StatefulTimeout(unit = TimeUnit.MINUTES, value = 10)
+@Stateful
+@StatefulTimeout(unit = TimeUnit.MINUTES, value = 10)
 @SessionScoped
 public class Caddy implements Serializable {
 	private FilmDTO dto;
 
 	private static final Logger LOG = Logger.getLogger("CINEMA");
-	private double selectionPrix;
+	private double selectionPrix = 0;
 
 	private List<FilmDTO> selectionFilm = new ArrayList<FilmDTO>();
 	private HashMap<FilmDTO, Integer> FilmQuantite = new HashMap<FilmDTO, Integer>();
@@ -51,14 +52,14 @@ public class Caddy implements Serializable {
 	}
 
 	public void removeFilmDto(FilmDTO dto) {
-//		FilmQuantite.put(dto, ++); decrementer le hashmap
-		Integer oldValue = FilmQuantite.get(dto);
-		if (oldValue == null) {
-			FilmQuantite.put(dto, 0);
-		} else {
+		if (!FilmQuantite.containsKey(dto)) {
+			return;
+		} else if (FilmQuantite.get(dto)>1) {
+			Integer oldValue = FilmQuantite.get(dto);
 			FilmQuantite.put(dto, oldValue - 1);
+		} else if (FilmQuantite.get(dto)==1){
+			FilmQuantite.remove(dto);
 		}
-		selectionFilm.add(dto);
 	}
 
 	public Caddy() {
@@ -84,6 +85,7 @@ public class Caddy implements Serializable {
 //		selectionFilm.add(dto);	
 //	}
 
+	@Deprecated
 	public double prixTotal() {
 		double p = 0;
 		for (FilmDTO f : selectionFilm) {
@@ -92,6 +94,23 @@ public class Caddy implements Serializable {
 		this.selectionPrix = p;
 		return p;
 	}
+	
+	public void calculPrixTotal() {
+		//TODO calcul avec le hashmap
+		this.selectionPrix = 0;
+		FilmQuantite.forEach((k,v)-> this.selectionPrix +=k.getPrixHT()*v);
+		return;
+//		selectionPrix = 0;
+//		Iterator it = FilmQuantite.values().iterator();
+//
+//		while (it.hasNext()) {
+//			selectionPrix+=it.
+//		}
+
+		
+	}
+	
+	
 
 	public double getSelectionPrix() {
 		return selectionPrix;
@@ -138,8 +157,5 @@ public class Caddy implements Serializable {
 			return false;
 		return true;
 	}
-
-
-
 
 }

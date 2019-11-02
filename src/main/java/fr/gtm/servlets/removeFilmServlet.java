@@ -11,8 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 
 import fr.gtm.entities.Caddy;
 import fr.gtm.entities.Film;
@@ -20,24 +18,21 @@ import fr.gtm.entities.FilmDTO;
 import fr.gtm.service.FilmService;
 
 /**
- * Servlet implementation class addFilmServlet
+ * Servlet implementation class removeFilmServlet
  */
-@WebServlet("/addFilmServlet")
-public class addFilmServlet extends HttpServlet {
+@WebServlet("/removeFilmServlet")
+public class removeFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private FilmService service;
 	@Inject
-//	private Caddy caddy = new Caddy();
-	private Caddy caddy;
-
+	private Caddy caddy; //= new Caddy()
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addFilmServlet() {
+    public removeFilmServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -47,25 +42,24 @@ public class addFilmServlet extends HttpServlet {
 		String page = "";
 		String identifiant = request.getParameter("id");
 		Long id = Long.parseLong(identifiant);
-		Film filmajoute = service.getFilmById(id);
-		
-//		HttpSession session = request.getSession();
-		
-//		Caddy caddy = (Caddy) session.getAttribute("caddy");
-		
-		caddy.addFilmDto(new FilmDTO(filmajoute));
+		Film filmEnleve = service.getFilmById(id);
+		caddy.removeFilmDto(new FilmDTO(filmEnleve));
 //		caddy.prixTotal();
 		caddy.calculPrixTotal();
-
+		
 		request.setAttribute("caddy", caddy);
-		page = "/show-films.jsp";
+		page = "/show-caddy.jsp";
 		
 		//pour afficher les films:
 		List<FilmDTO> films = service.getAllFilmsDto();
 		request.setAttribute("films", films);
+		
+		
 
+	
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
 		rd.forward(request, response);
+		
 
 		
 	}

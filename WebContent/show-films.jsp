@@ -8,14 +8,7 @@
 <title>films</title>
 </head>
 <body>
-	<%-- 	<h2>${titre }</h2> --%>
-	<!-- 	<table> -->
-	<%-- 		<c:forEach items="${films }" var="film"> --%>
-	<!-- 			<tr> -->
-	<%-- 				<td>${film.titre }</td> --%>
-	<!-- 			</tr> -->
-	<%-- 		</c:forEach> --%>
-	<!-- 	</table> -->
+
 
 	<h2>Acheter:</h2>
 

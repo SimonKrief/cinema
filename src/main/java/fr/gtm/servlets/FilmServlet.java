@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.gtm.entities.Caddy;
 import fr.gtm.entities.Film;
 import fr.gtm.entities.FilmDTO;
 import fr.gtm.service.FilmService;
@@ -23,6 +25,8 @@ public class FilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private FilmService service;
+	@Inject
+	private Caddy caddy;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -31,8 +35,10 @@ public class FilmServlet extends HttpServlet {
 
 //		List<Film> films = service.getAllFilms();
 		List<FilmDTO> films = service.getAllFilmsDto();
-
-		
+		//pour afficher le prix
+		request.setAttribute("caddy", caddy);
+		caddy.calculPrixTotal();
+		//pour afficher le catalogue
 		request.setAttribute("films", films);
 		page = "/show-films.jsp";
 
